@@ -11,6 +11,9 @@ from OnlineBankConfig import OnlineBankConfig
 from playground.network.packet import PacketType
 from playground.common.CipherUtil import loadCertFromFile
 
+input_queue = []
+output_queue = []
+
 class PaymentProcessing:
     def __init__(self):
         self._bankconfig = OnlineBankConfig()
