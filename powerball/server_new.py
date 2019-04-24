@@ -105,6 +105,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                 if payment_status == "Verified":
                     self._token = packet.token
 
+
                     self.homepage = Homepage()
                     self.homepage.start()
 
@@ -129,7 +130,7 @@ class HomepageServerProtocol(asyncio.Protocol):
 
                     print("response:"+response)
 
-                    status   = "locked" # self.homepage.status()
+                    status   = self.homepage.getstatus()
 
                     print("status:"+status)
                     game_response = GameResponse(
