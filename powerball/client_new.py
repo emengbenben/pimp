@@ -113,9 +113,10 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(self.get_gncasino_input())
             elif isinstance(packet, GameResponse):
                 print(packet.response)
-                print(packet.status)
                 if packet.status != "6":
+                    print("status:" + packet.status)
                     asyncio.ensure_future(self.get_escape_room_input())
+                    print("status11:" + packet.status)
                 else: 
                     print("Quit!")
                     self.transport.close()
