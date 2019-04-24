@@ -123,6 +123,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                 if packet.token != self._token:
                     self.transport.close()
                 else:
+                    print("wang:"+packet.command)
                     response = self.homepage.input(packet.command)
 
                     status   = self.homepage.status()
