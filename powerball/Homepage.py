@@ -84,13 +84,13 @@ class Homepage():
         self.roulette = dond()
         output = self.roulette.start()
     elif userInput == "3":
-        self.status = "3"
+        self.status = "0"
     elif userInput == "4":
-        self.status = "4"
+        self.status = "0"
     elif userInput == "5":
-        self.status = "5"
+        self.status = "0"
     elif userInput == "6":
-        self.status = "6"
+        self.status = "0"
     else:
         output  = "Please enter a single digit of your choice."
     return output
