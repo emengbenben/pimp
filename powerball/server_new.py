@@ -126,7 +126,10 @@ class HomepageServerProtocol(asyncio.Protocol):
                     print("wang:"+packet.command)
                     response = self.homepage.input(packet.command)
 
+                    print("response:"+response)
+
                     status   = self.homepage.status()
+                    print("status:"+status)
                     game_response = GameResponse(
                         response=response,
                         status  =status)
