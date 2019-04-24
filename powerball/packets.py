@@ -45,6 +45,5 @@ class GameResponse(PacketType):
     DEFINITION_IDENTIFIER = "samples.escape_room_for_profit.GameResponse"
     DEFINITION_VERSION = "1.0"
     FIELDS = [
-        ("response", STRING),
-        ("status",   STRING)
+        ("response", STRING)
     ]
