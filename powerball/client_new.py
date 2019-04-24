@@ -113,6 +113,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(self.get_gncasino_input())
             elif isinstance(packet, GameResponse):
                 print(packet.response)
+                print(packet.status)
                 if packet.status != "6":
                     asyncio.ensure_future(self.get_escape_room_input())
                 else: 
@@ -148,9 +149,7 @@ class HomepageClientProtocol(asyncio.Protocol):
     async def get_gncasino_input(self):
         command = await async_get_input(">> ")
         cmd = GameRequest(token=self._token, command=command)
-        print("wang:")
         self.transport.write(cmd.__serialize__())
-        print("wangsss:")
         
 if __name__=="__main__":
     import sys, argparse
