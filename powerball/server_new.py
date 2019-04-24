@@ -139,15 +139,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                     self.transport.write(game_response.__serialize__())
                     if status == "6":
                         self.transport.close()
-
-                    """
-
-                    if self.homepage.getSign() == False:
-                        self.transport.write(self.homepage.welcome_narratives().encode())
-                        self.homepage.setSign()
-                    """
-                    
-                    
+              
 
 
 if __name__=="__main__":
