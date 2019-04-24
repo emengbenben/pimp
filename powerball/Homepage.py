@@ -13,7 +13,7 @@ class Homepage():
   def setSign(self):
     self.sign = True
 
-  def status(self):
+  def getstatus(self):
   	return self.status
 
   def input(self,string):
