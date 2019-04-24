@@ -148,7 +148,9 @@ class HomepageClientProtocol(asyncio.Protocol):
     async def get_gncasino_input(self):
         command = await async_get_input(">> ")
         cmd = GameRequest(token=self._token, command=command)
+        print("wang:")
         self.transport.write(cmd.__serialize__())
+        print("wangsss:")
         
 if __name__=="__main__":
     import sys, argparse
