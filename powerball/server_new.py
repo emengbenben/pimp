@@ -106,6 +106,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                     self._token = packet.token
 
                     self.homepage = Homepage()
+                    self.homepage.start()
 
                     response = PaymentResult(
                         token=   self._token,
@@ -129,6 +130,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                     print("response:"+response)
 
                     status   = self.homepage.status()
+
                     print("status:"+status)
                     game_response = GameResponse(
                         response=response,
