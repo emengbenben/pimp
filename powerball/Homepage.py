@@ -3,7 +3,7 @@ from Roulette import Roulette
 
 class Homepage():
   def __init__(self):
-    self.status = 0 # the game's initial status is 0, 0 means the game is still on the homepage
+    self.status = "0" # the game's initial status is 0, 0 means the game is still on the homepage
     self.response = ""
     self.sign = False
   
@@ -13,29 +13,28 @@ class Homepage():
   def setSign(self):
     self.sign = True
 
+  def status(self):
+  	return self.status
+
   def input(self,string):
     #if self.status === 0, choose Service
-    if self.status == 0:
+    if self.status == "0":
       if string >="1" and string <= "6":
         self.response = self.choose_game(string)
       else:
         self.response = "Improper input."
-    elif self.status == 1:
+    elif self.status == "1":
       self.response = self.powerball.input(string)
 
       if self.powerball.getquit() == True:
-        self.status = 0
+        self.status = "0"
         self.response = self.homepage()
 
-    elif self.status == 2:
+    elif self.status == "2":
       self.response = self.roulette.input(string)
       
       if self.roulette.getquit() == True:
-        self.status = 0
-        self.response = self.homepage()
-
-      if self.roulette.getquit() == True:
-        self.status = 0
+        self.status = "0"
         self.response = self.homepage()
 
     else:
@@ -76,22 +75,22 @@ class Homepage():
   def choose_game(self, userInput):
     output = ""
     if userInput == "1":
-        self.status = 1
+        self.status = "1"
         lottery = [12, 24 ,35, 55, 22]
         self.powerball = PowerBall(1000, lottery)
         output = self.powerball.start()
     elif userInput == "2":
-        self.status = 2
-        self.roulette = Roulette()
+        self.status = "2"
+        self.roulette = dond()
         output = self.roulette.start()
     elif userInput == "3":
-        self.status = 3
+        self.status = "3"
     elif userInput == "4":
-        self.status = 4
+        self.status = "4"
     elif userInput == "5":
-        self.status = 5
+        self.status = "5"
     elif userInput == "6":
-        self.status = 6
+        self.status = "6"
     else:
         output  = "Please enter a single digit of your choice."
     return output
