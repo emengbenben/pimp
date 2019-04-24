@@ -54,10 +54,10 @@ class Homepage():
     response = response + "Casino Services Menu:\n"
     response = response + "1. Powerball\n"
     response = response + "2. Roulette\n"
-    response = response + "3. Deal or No Deal\n"
-    response = response + "4. Career Assisstance # direct transfer with memo\n"
-    response = response + "5. About Us\n"
-    response = response + "6. Career with Golden Nugget Casino\n\n"
+    response = response + "3. Career Assisstance # direct transfer with memo\n"
+    response = response + "4. About Us\n"
+    response = response + "5. Career with Golden Nugget Casino\n\n"
+    response = response + "6. Quit"
     response = response + "Note: You can choose the menu by enter a single digit that is corresponding to the menu."
 
     return response
@@ -65,10 +65,10 @@ class Homepage():
   def homepage(self):
     response = "1. Powerball\n"
     response = response + "2. Roulette\n"
-    response = response + "3. Deal or No Deal\n"
-    response = response + "4. Career Assisstance # direct transfer with memo\n"
-    response = response + "5. About Us\n"
-    response = response + "6. Career with Golden Nugget Casino\n\n"
+    response = response + "3. Career Assisstance # direct transfer with memo\n"
+    response = response + "4. About Us\n"
+    response = response + "5. Career with Golden Nugget Casino\n\n"
+    response = response + "6. Quit"
     response = response + "Note: You can choose the menu by enter a single digit that is corresponding to the menu."
     return response
       
@@ -90,7 +90,7 @@ class Homepage():
     elif userInput == "5":
         self.status = "0"
     elif userInput == "6":
-        self.status = "0"
+        self.status = "6"
     else:
         output  = "Please enter a single digit of your choice."
     return output
