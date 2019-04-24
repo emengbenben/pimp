@@ -129,7 +129,7 @@ class HomepageServerProtocol(asyncio.Protocol):
 
                     print("response:"+response)
 
-                    status   = self.homepage.status()
+                    status   = "locked" # self.homepage.status()
 
                     print("status:"+status)
                     game_response = GameResponse(
