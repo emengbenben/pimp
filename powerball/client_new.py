@@ -155,7 +155,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("--host", default="localhost")
-    parser.add_argument("-p", "--port", default=5678)
+    parser.add_argument("-p", "--port", default=5679)
     args = parser.parse_args(sys.argv[1:])
     host, port = args.host, args.port
     port = int(port) 
