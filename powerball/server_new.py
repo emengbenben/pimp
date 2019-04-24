@@ -125,13 +125,13 @@ class HomepageServerProtocol(asyncio.Protocol):
                 if packet.token != self._token:
                     self.transport.close()
                 else:
-                    print("wang:"+packet.command)
-                    response = self.homepage.input(packet.command)
-
-                    print("response:"+response)
+                    if self.homepage.getSign() == False:
+                        response = self.homepage.welcome_narratives()
+                        self.homepage.setSign()
+                    else:
+                        response = self.homepage.input(packet.command)
 
                     status   = self.homepage.getstatus()
-
                     print("status:"+status)
                     game_response = GameResponse(
                         response=response,
@@ -158,7 +158,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5679)
-    parser.add_argument("--price", default=5)
+    parser.add_argument("--price", default=0)
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
