@@ -2,7 +2,7 @@ from powerball import PowerBall
 from Roulette import Roulette
 
 class Homepage():
-  def __init__(self):
+  def start(self):
     self.status = "0" # the game's initial status is 0, 0 means the game is still on the homepage
     self.response = ""
     self.sign = False
