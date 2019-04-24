@@ -133,7 +133,7 @@ if __name__=="__main__":
     global_payment_processor.configure(args.account, int(args.price))
     
     loop = asyncio.get_event_loop()
-    coro = playground.create_server(EscapeRoomServerProtocol, host='20191.157.156.156', port=args.port)
+    coro = playground.create_server(EscapeRoomServerProtocol, host='20191.2.10.1', port=args.port)
     server = loop.run_until_complete(coro)
     
     # Serve requests until Ctrl+C is pressed
