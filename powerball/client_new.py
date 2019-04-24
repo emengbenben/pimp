@@ -113,12 +113,12 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(self.get_gncasino_input())
             elif isinstance(packet, GameResponse):
                 print(packet.response)
-                """
-                if packet.status == "locked":
+                if packet.status != "6":
                     asyncio.ensure_future(self.get_escape_room_input())
-                elif packet.status == "escaped":
-                    print("Congratulations! You escaped!")
+                else: 
+                    print("Quit!")
                     self.transport.close()
+                """
                 else:
                     print("Sorry! You died!")
                     self.transport.close()
@@ -163,7 +163,7 @@ if __name__=="__main__":
     # but it doesn't actually log in yet.
     global_payment_processor.set_src_account(args.account)
     loop = asyncio.get_event_loop()
-    coro = playground.create_connection(HomepageClientProtocol, host='20191.157.156.156', port=port)
+    coro = playground.create_connection(HomepageClientProtocol, host=host, port=port)
     transport, protocol = loop.run_until_complete(coro)
     print("connected",protocol,transport)
     loop.add_reader(sys.stdin, stdin_reader)
