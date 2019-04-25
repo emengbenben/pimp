@@ -78,19 +78,6 @@ class HomepageServerProtocol(asyncio.Protocol):
         print("Server connected")
         self.transport = transport
 
-        
-        #self.transport.write(self.homepage.welcome_narratives().encode())
-    """    
-    def data_received(self, data):
-        if self.homepage.getSign() == False :
-            self.transport.write(self.homepage.welcome_narratives().encode())
-            self.homepage.setSign()
-        else:
-            string = data.decode()
-            string = string[:-1]
-            output = self.homepage.input(string)
-            self.transport.write(output.encode())
-    """
     def data_received(self, data):
         self._buffer.update(data)
         for packet in self._buffer.nextPackets():
@@ -132,7 +119,6 @@ class HomepageServerProtocol(asyncio.Protocol):
                         response = self.homepage.input(packet.command)
 
                     status   = self.homepage.getstatus()
-                    print("status:"+status)
                     game_response = GameResponse(
                         response=response,
                         status  =status)
@@ -150,7 +136,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5679)
-    parser.add_argument("--price", default=0)
+    parser.add_argument("--price", default=3)
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
