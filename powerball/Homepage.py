@@ -56,8 +56,8 @@ class Homepage():
     response = response + "2. Roulette\n"
     response = response + "3. Career Assisstance # direct transfer with memo\n"
     response = response + "4. About Us\n"
-    response = response + "5. Career with Golden Nugget Casino\n\n"
-    response = response + "6. Quit"
+    response = response + "5. Career with Golden Nugget Casino\n"
+    response = response + "6. Quit\n\n"
     response = response + "Note: You can choose the menu by enter a single digit that is corresponding to the menu."
 
     return response
@@ -67,8 +67,8 @@ class Homepage():
     response = response + "2. Roulette\n"
     response = response + "3. Career Assisstance # direct transfer with memo\n"
     response = response + "4. About Us\n"
-    response = response + "5. Career with Golden Nugget Casino\n\n"
-    response = response + "6. Quit"
+    response = response + "5. Career with Golden Nugget Casino\n"
+    response = response + "6. Quit\n\n"
     response = response + "Note: You can choose the menu by enter a single digit that is corresponding to the menu."
     return response
       
