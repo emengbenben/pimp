@@ -295,7 +295,7 @@ class Roulette:
 
 		return response
 
-
+"""
 def main():
 	roll = Roulette()
 	print(roll.start())
@@ -307,6 +307,7 @@ def main():
             
 if __name__=="__main__":
 	main()
+"""
 
 
 
