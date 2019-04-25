@@ -81,7 +81,7 @@ class Homepage():
         output = self.powerball.start()
     elif userInput == "2":
         self.status = "2"
-        self.roulette = dond()
+        self.roulette = Roulette()
         output = self.roulette.start()
     elif userInput == "3":
         self.status = "0"
