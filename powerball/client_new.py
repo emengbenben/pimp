@@ -85,11 +85,7 @@ class HomepageClientProtocol(asyncio.Protocol):
         loop.call_later(1, loop.stop)
         
     def data_received(self, data):
-        """
-        print(data.decode())
-        input = stdinAlert()
-        self.transport.write(input.encode())
-        """
+        
         self._buffer.update(data)
         for packet in self._buffer.nextPackets():
             print("Client got", packet)
@@ -118,11 +114,6 @@ class HomepageClientProtocol(asyncio.Protocol):
                 else: 
                     print("Quit!")
                     self.transport.close()
-                """
-                else:
-                    print("Sorry! You died!")
-                    self.transport.close()
-                """
     async def pay_for_admission(self, dst_account, amount, token):
         
         result = await global_payment_processor.make_payment(dst_account, amount, token)
