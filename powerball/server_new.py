@@ -190,6 +190,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                         request_transfer = RequestTransfer(
                             amount = self.homepage.getcurrency()
                         )
+                        print(self.homepage.getcurrency())
                         self.transport.write(request_transfer.__serialize__())
                         print("request transfer sent")
                         #self.transport.close()
