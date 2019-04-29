@@ -155,7 +155,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                 print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
-                     print("wangbendfang")
+                    print("wangbendfang")
 
                     response = PaymentResult(
                         token=   packet.token,
