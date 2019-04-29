@@ -8,7 +8,7 @@ import getpass, os, playground
 from OnlineBank import BankClientProtocol
 from OnlineBankConfig import OnlineBankConfig
 from playground.network.packet import PacketType
-from playground.common.CipherUtil import loadCertFromFile
+from playground.common.CipherUtil import loadCertFromFile, RSA_SIGNATURE_MAC
 
 input_queue = []
 output_queue = []
@@ -40,21 +40,24 @@ class PaymentProcessing:
         return req_admission
 
     def _verifyReceiptSignature(self, receipt, signature):
-        verifier = RSA_SIGNATURE_MAC(self._cert.public_key())
+        verifier = RSA_SIGNATURE_MAC(self._bank_cert.public_key())
         return verifier.verify(receipt, signature)
         
     def _verifyReceipt(self, receipt, expected_token):
         ledger_line = LedgerLineStorage.deserialize(receipt)
-        memo = ledger_line.memo(self._account)
+        memo = ledger_line.memo(self._src_account)
         if str(memo) != str(expected_token):
             return "Mismatching token in memo (expected {} got {})".format(
                 expected_token,
                 memo)
-        amount = ledger_line.getTransactionAmount(self._account)
+        amount = ledger_line.getTransactionAmount(self._src_account)
+        print(amount)
+        """
         if amount != self._price:
             return "Mismatching amount (expected {} got {})".format(
                 self._price,
                 amount)
+        """
         return "Verified"
         
         
@@ -146,11 +149,11 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(make_payment_coro)
 
             elif isinstance(packet, ProofOfPayment):
-                print("wangben")
                 payment_status = global_payment_processor.process(
                     packet.token,
                     packet.receipt, 
                     packet.signature)
+
                 print("wangbendfdfd")
                 print(payment_status)
                 if payment_status == "Verified":
