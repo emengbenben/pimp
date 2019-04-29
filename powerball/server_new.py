@@ -190,7 +190,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                         if(self.homepage.getcurrency() >= 0):
                             response = "The amount of Bitpoints u earn is " + str(self.homepage.getcurrency())
                         else:
-                            response = "The amount of Bitpoints u must pay is " + str(self.homepage.getcurrency())
+                            response = "The amount of Bitpoints u must pay is " + str(0 - self.homepage.getcurrency())
 
                         status   = self.homepage.getstatus()
                         game_response = GameResponse(
@@ -230,7 +230,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5679)
-    parser.add_argument("--price", default=3)
+    parser.add_argument("--price", default = 0)
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
