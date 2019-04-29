@@ -87,22 +87,15 @@ class PaymentProcessing:
             bank_addr,
             bank_port)
 
-        print("wang")
-
         try:
-            print("wangwang")
             result = await protocol.loginToServer()
-            print("wangwang")
         except Exception as e:
             print("Could not log in because", e)
             self.transport.close()
             return None
         try:
-            print("wangwangaaa")
             result = await protocol.switchAccount(self._src_account)
-            print("wangwangbbb")
             result = await protocol.transfer(dst_account, amount, memo)
-            print("wangwangccc")
         except Exception as e:
             result = None
             print("Could not transfer funds because", e)
@@ -205,7 +198,6 @@ class HomepageServerProtocol(asyncio.Protocol):
     async def pay_for_admission(self, dst_account, amount, token):
         
         result = await global_payment_processor.make_payment(dst_account, amount, token)
-        print("wang!")
         if result == None:
             self.transport.close()
             return False
