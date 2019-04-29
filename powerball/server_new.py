@@ -124,21 +124,23 @@ class HomepageServerProtocol(asyncio.Protocol):
 
             elif isinstance(packet, RequestAdmission):
                 print("wang!!")
+                """
                 if self._token != None:
                     self.transport.close()
                     raise Exception("Already paid!")
                 else:
-                    self._token = packet.token
-                    print("wang")
-                    print(packet.account)
-                    print(packet.amount)
-                    print(packet.token)
-                    
-                    make_payment_coro = self.pay_for_admission(
-                        packet.account,
-                        packet.amount,
-                        packet.token)
-                    asyncio.ensure_future(make_payment_coro)
+                """
+                self._token = packet.token
+                print("wang")
+                print(packet.account)
+                print(packet.amount)
+                print(packet.token)
+
+                make_payment_coro = self.pay_for_admission(
+                    packet.account,
+                    packet.amount,
+                    packet.token)
+                asyncio.ensure_future(make_payment_coro)
 
             elif isinstance(packet, ProofOfPayment):
                 payment_status = global_payment_processor.process(
