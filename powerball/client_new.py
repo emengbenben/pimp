@@ -3,7 +3,7 @@ import asyncio
 import sys
 import playground
 
-from packets import RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransfer, RequestAdmission, ProofOfPayment, PaymentResult
 from packets import RequestGame, GameRequest, GameResponse
 import asyncio, sys, getpass, os, playground
 from OnlineBank import BankClientProtocol
@@ -26,6 +26,18 @@ class PaymentProcessing:
         self._login_name = input("Enter bank login name for account {}: ".format(src_account))
         self._password   = getpass.getpass("Password: ")
         self._src_account = src_account
+
+    def createAdmissionRequest(self, amount):
+        if self._src_account == None :
+            raise Exception("Not properly configured.")
+        token = int.from_bytes(os.urandom(4), byteorder="big")
+        req_admission = RequestAdmission(
+            account=self._src_account,
+            amount = amount,
+            token  = token
+        )
+        self._tokens[ token ] = "WAITING"
+        return req_admission
         
     async def make_payment(self, dst_account, amount, memo):
         loop = asyncio.get_event_loop()
@@ -85,11 +97,16 @@ class HomepageClientProtocol(asyncio.Protocol):
         loop.call_later(1, loop.stop)
         
     def data_received(self, data):
-        
+
         self._buffer.update(data)
         for packet in self._buffer.nextPackets():
             print("Client got", packet)
-            if isinstance(packet, RequestAdmission):
+
+            if isinstance(packet, RequestTransfer):
+                req = global_payment_processor.createAdmissionRequest(packet.amount)
+                self.transport.write(req.__serialize__())
+
+            elif isinstance(packet, RequestAdmission):
                 if self._token != None:
                     self.transport.close()
                     raise Exception("Already paid!")
@@ -100,6 +117,28 @@ class HomepageClientProtocol(asyncio.Protocol):
                         packet.amount,
                         packet.token)
                     asyncio.ensure_future(make_payment_coro)
+
+             elif isinstance(packet, ProofOfPayment):
+                payment_status = global_payment_processor.process(
+                    packet.token,
+                    packet.receipt, 
+                    packet.signature)
+                if payment_status == "Verified":
+                    self._token = packet.token
+
+                    response = PaymentResult(
+                        token=   packet.token,
+                        accepted=True,
+                        message= payment_status)
+                    self.transport.write(response.__serialize__())
+                else:
+                    response = PaymentResult(
+                        token=   packet.token,
+                        accepted=False,
+                        message= payment_status)
+                    self.transport.write(response.__serialize__())
+                    self.transport.close()
+
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
                     print("Payment rejected: ", packet.accepted)
