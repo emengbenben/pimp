@@ -76,7 +76,7 @@ class PaymentProcessing:
     async def make_payment(self, dst_account, amount, memo):
         loop = asyncio.get_event_loop()
         bank_addr = self._bankconfig.get_parameter("CLIENT","bank_addr")
-        bank_port = int(self._bankconfig.get_parameter("CLIENT","bank_port"))
+        bank_port = int(self._bankconfig.get_parameter("SERVER","port"))
 
         print("Connect to bank {}:{} for payment.".format(bank_addr, bank_port))
 
@@ -84,6 +84,7 @@ class PaymentProcessing:
             lambda: BankClientProtocol(self._cert, self._login_name, self._password),
             bank_addr,
             bank_port)
+
         print("wang")
 
         try:
