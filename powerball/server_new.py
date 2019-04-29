@@ -167,10 +167,9 @@ class HomepageServerProtocol(asyncio.Protocol):
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
                     print("Payment rejected: ", packet.accepted)
-                    self.transport.close()
                 else:
                     print("Payment accepted.")
-                    self.transport.close()
+                self.transport.close()
 
             elif isinstance(packet, GameRequest):
                 if packet.token != self._token:
