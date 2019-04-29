@@ -117,7 +117,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                         packet.amount,
                         packet.token)
                     asyncio.ensure_future(make_payment_coro)
-                    
+
             elif isinstance(packet, ProofOfPayment):
                 payment_status = global_payment_processor.process(
                     packet.token,
@@ -152,7 +152,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(self.get_gncasino_input())
                 else: 
                     print("Quit!")
-                    self.transport.close()
+                    #self.transport.close()
     async def pay_for_admission(self, dst_account, amount, token):
         
         result = await global_payment_processor.make_payment(dst_account, amount, token)
