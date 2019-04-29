@@ -9,6 +9,7 @@ from OnlineBank import BankClientProtocol
 from OnlineBankConfig import OnlineBankConfig
 from playground.network.packet import PacketType
 from playground.common.CipherUtil import loadCertFromFile, RSA_SIGNATURE_MAC
+from BankCore import LedgerLineStorage, LedgerLine
 
 input_queue = []
 output_queue = []
@@ -40,9 +41,7 @@ class PaymentProcessing:
         return req_admission
 
     def _verifyReceiptSignature(self, receipt, signature):
-        print("amount33")
         verifier = RSA_SIGNATURE_MAC(self._bank_cert.public_key())
-        print("amount44")
         return verifier.verify(receipt, signature)
         
     def _verifyReceipt(self, receipt, expected_token):
