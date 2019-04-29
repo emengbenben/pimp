@@ -84,15 +84,22 @@ class PaymentProcessing:
             lambda: BankClientProtocol(self._cert, self._login_name, self._password),
             bank_addr,
             bank_port)
+        print("wang")
+
         try:
+            print("wangwang")
             result = await protocol.loginToServer()
+            print("wangwang")
         except Exception as e:
             print("Could not log in because", e)
             self.transport.close()
             return None
         try:
+            print("wangwangaaa")
             result = await protocol.switchAccount(self._src_account)
+            print("wangwangbbb")
             result = await protocol.transfer(dst_account, amount, memo)
+            print("wangwangccc")
         except Exception as e:
             result = None
             print("Could not transfer funds because", e)
@@ -123,7 +130,6 @@ class HomepageServerProtocol(asyncio.Protocol):
                 self.transport.write(req.__serialize__())
 
             elif isinstance(packet, RequestAdmission):
-                print("wang!!")
                 """
                 if self._token != None:
                     self.transport.close()
@@ -131,11 +137,6 @@ class HomepageServerProtocol(asyncio.Protocol):
                 else:
                 """
                 self._token = packet.token
-                print("wang")
-                print(packet.account)
-                print(packet.amount)
-                print(packet.token)
-
                 make_payment_coro = self.pay_for_admission(
                     packet.account,
                     packet.amount,
@@ -200,7 +201,6 @@ class HomepageServerProtocol(asyncio.Protocol):
 
     async def pay_for_admission(self, dst_account, amount, token):
         
-        print("wang!!")
         result = await global_payment_processor.make_payment(dst_account, amount, token)
         print("wang!")
         if result == None:
