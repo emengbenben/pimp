@@ -38,6 +38,33 @@ class PaymentProcessing:
         )
         self._tokens[ token ] = "WAITING"
         return req_admission
+
+    def _verifyReceiptSignature(self, receipt, signature):
+        verifier = RSA_SIGNATURE_MAC(self._cert.public_key())
+        return verifier.verify(receipt, signature)
+        
+    def _verifyReceipt(self, receipt, expected_token):
+        ledger_line = LedgerLineStorage.deserialize(receipt)
+        memo = ledger_line.memo(self._account)
+        if str(memo) != str(expected_token):
+            return "Mismatching token in memo (expected {} got {})".format(
+                expected_token,
+                memo)
+        amount = ledger_line.getTransactionAmount(self._account)
+        if amount != self._price:
+            return "Mismatching amount (expected {} got {})".format(
+                self._price,
+                amount)
+        return "Verified"
+        
+        
+    def process(self, token, receipt, signature):
+        if token in self._tokens:
+            del self._tokens[token]
+            if not self._verifyReceiptSignature(receipt, signature):
+                return "Signature failed"
+            return self._verifyReceipt(receipt, token)
+        return "Unknown Token"
         
     async def make_payment(self, dst_account, amount, memo):
         loop = asyncio.get_event_loop()
@@ -103,6 +130,8 @@ class HomepageClientProtocol(asyncio.Protocol):
             print("Client got", packet)
 
             if isinstance(packet, RequestTransfer):
+                print("Warning!!!")
+                print(packet.amount)
                 req = global_payment_processor.createAdmissionRequest(packet.amount)
                 self.transport.write(req.__serialize__())
 
