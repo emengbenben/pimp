@@ -16,8 +16,8 @@ class Homepage():
 
   def getstatus(self):
   	return self.status
+
   def getcurrency(self):
-  	self.currency = 5
   	return self.currency
 
   def input(self,string):
@@ -40,6 +40,7 @@ class Homepage():
       
       if self.roulette.getquit() == True:
         self.status = "0"
+        self.currency += self.roulette.getcurrency()
         self.response = self.homepage()
 
     else:
