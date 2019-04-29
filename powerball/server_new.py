@@ -117,6 +117,7 @@ class HomepageServerProtocol(asyncio.Protocol):
         self._buffer.update(data)
         for packet in self._buffer.nextPackets():
             print("Server got", packet)
+
             if isinstance(packet, RequestGame):
                 req = global_payment_processor.createAdmissionRequest()
                 self.transport.write(req.__serialize__())
@@ -191,7 +192,9 @@ class HomepageServerProtocol(asyncio.Protocol):
 
     async def pay_for_admission(self, dst_account, amount, token):
         
+        print("wang!!")
         result = await global_payment_processor.make_payment(dst_account, amount, token)
+        print("wang!")
         if result == None:
             self.transport.close()
             return False
