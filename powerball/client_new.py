@@ -1,11 +1,10 @@
 import random
 import asyncio
 import sys
-import playground
 
 from packets import RequestTransfer, RequestAdmission, ProofOfPayment, PaymentResult
 from packets import RequestGame, GameRequest, GameResponse
-import asyncio, sys, getpass, os, playground
+import getpass, os, playground
 from OnlineBank import BankClientProtocol
 from OnlineBankConfig import OnlineBankConfig
 from playground.network.packet import PacketType
@@ -147,12 +146,16 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(make_payment_coro)
 
             elif isinstance(packet, ProofOfPayment):
+                print("wangben")
                 payment_status = global_payment_processor.process(
                     packet.token,
                     packet.receipt, 
                     packet.signature)
+                print("wangbendfdfd")
+                print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
+                     print("wangbendfang")
 
                     response = PaymentResult(
                         token=   packet.token,
@@ -165,6 +168,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                         accepted=False,
                         message= payment_status)
                     self.transport.write(response.__serialize__())
+
                     self.transport.close()
 
             elif isinstance(packet, PaymentResult):
