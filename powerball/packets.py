@@ -6,6 +6,13 @@ class RequestGame(PacketType):
     DEFINITION_VERSION = "1.0"
     FIELDS = []
 
+class RequestTransfer(PacketType):
+    DEFINITION_IDENTIFIER = "samples.GNgame.RequestTransfer"
+    DEFINITION_VERSION = "1.0"
+    FIELDS = [
+        ("amount",  UINT16)
+    ]
+
 class RequestAdmission(PacketType):
     DEFINITION_IDENTIFIER = "samples.escape_room_for_profit.RequestAdmission"
     DEFINITION_VERSION = "1.0"
