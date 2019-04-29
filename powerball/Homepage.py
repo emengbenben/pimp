@@ -6,6 +6,7 @@ class Homepage():
     self.status = "0" # the game's initial status is 0, 0 means the game is still on the homepage
     self.response = ""
     self.sign = False
+    self.currency = 0 
   
   def getSign(self):
     return self.sign
@@ -15,6 +16,9 @@ class Homepage():
 
   def getstatus(self):
   	return self.status
+  def getcurrency(self):
+  	self.currency = 5
+  	return self.currency
 
   def input(self,string):
     #if self.status === 0, choose Service
@@ -28,6 +32,7 @@ class Homepage():
 
       if self.powerball.getquit() == True:
         self.status = "0"
+        self.currency += self.powerball.getcurrency()
         self.response = self.homepage()
 
     elif self.status == "2":
@@ -77,7 +82,7 @@ class Homepage():
     if userInput == "1":
         self.status = "1"
         lottery = [12, 24 ,35, 55, 22]
-        self.powerball = PowerBall(1000, lottery)
+        self.powerball = PowerBall(100, lottery)
         output = self.powerball.start()
     elif userInput == "2":
         self.status = "2"
