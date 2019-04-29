@@ -40,12 +40,18 @@ class PaymentProcessing:
         return req_admission
 
     def _verifyReceiptSignature(self, receipt, signature):
+        print("amount33")
         verifier = RSA_SIGNATURE_MAC(self._bank_cert.public_key())
+        print("amount44")
         return verifier.verify(receipt, signature)
         
     def _verifyReceipt(self, receipt, expected_token):
+
+        print("amount")
         ledger_line = LedgerLineStorage.deserialize(receipt)
+        print("amount11")
         memo = ledger_line.memo(self._src_account)
+        print("amount22")
         if str(memo) != str(expected_token):
             return "Mismatching token in memo (expected {} got {})".format(
                 expected_token,
@@ -154,7 +160,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                     packet.receipt, 
                     packet.signature)
 
-                print("wangbendfdfd")
+                print("wangbend")
                 print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
