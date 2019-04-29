@@ -15,8 +15,7 @@ class Roulette:
 		return self.quit
 
 	def getcurrency(self):
-		currency = self.budget - 500
-  		return currency
+  		return self.budget - 500
 
 	def betlist(self):
 		response =  "\nThe Betting List:\n--------------------"
