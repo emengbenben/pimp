@@ -80,8 +80,10 @@ class PaymentProcessing:
 
         print("Connect to bank {}:{} for payment.".format(bank_addr, bank_port))
 
+        transport.clsoe()
+
         transport, protocol = await playground.create_connection(
-            lambda: BankClientProtocol(self._cert, self._login_name, self._password),
+            lambda: BankServerProtocol(self._cert, self._login_name, self._password),
             bank_addr,
             bank_port)
 
