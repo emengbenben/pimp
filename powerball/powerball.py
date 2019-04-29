@@ -8,9 +8,13 @@ class PowerBall:
 		self.quit = False
 		self.status = 0  # 0 means just enter into the homepage 
 		self.num = 0  # num is the Number of tickets client want to buy
+		self.currency = 0
 
 	def getquit(self):
 		return self.quit
+		
+	def getcurrency(self):
+  		return self.currency
 
 	def GenerateRandom(self, num):
 		randlist = []
@@ -28,6 +32,7 @@ class PowerBall:
 			if choice == "1":
 				self.status = 1
 				response = "Number of tickets you want to buy: "
+				self.currency = self.currency - 10
 		
 			elif choice == "2":
 				response = "EACH GAME IS WORTH 10 BITPOINTS\n1. Select five numbers from 1 to 69 or you can also choose a 'Randomly Generated Ticket' that gives you 5 randonly generated numbers\n2. Every Monday and Thursday the PowerBall rolls and 5 random winning numbers are displayed on our home page\n3. If 3 or more of your ticket numbers match with the winning numbers on the PowerBall, you win according to the Prizes listed\n4. To claim your prize, go to our home page and choose the 'Claim Prize' option"
@@ -76,8 +81,10 @@ class PowerBall:
 			arr = choice.split(",")
 			arr = [int(i) for i in arr]
 			prize = self.CalPrize(arr)
-			if prize != "":
+			if prize != 0:
 				response = "\nCongrats! You won {} BITPOINTS".format(prize)
+				self.currency += prize
+
 			else:
 				response = "\nSorry!, You didnt win anything"
 
@@ -103,6 +110,7 @@ class PowerBall:
 			if i in self.lottery:
 				count = count + 1
 
+		prize = 0
 		if count == 3:
 			prize = 0.2 * self.pool
 			return prize
@@ -113,5 +121,7 @@ class PowerBall:
 
 		elif count == 5:
 			prize = 0.5 * self.pool
-			return prize			
+			return prize
+		else:
+			return prize	
 
