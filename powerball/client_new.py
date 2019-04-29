@@ -45,18 +45,13 @@ class PaymentProcessing:
         return verifier.verify(receipt, signature)
         
     def _verifyReceipt(self, receipt, expected_token):
-
-        print("amount")
         ledger_line = LedgerLineStorage.deserialize(receipt)
-        print("amount11")
         memo = ledger_line.memo(self._src_account)
-        print("amount22")
         if str(memo) != str(expected_token):
             return "Mismatching token in memo (expected {} got {})".format(
                 expected_token,
                 memo)
         amount = ledger_line.getTransactionAmount(self._src_account)
-        print(amount)
         """
         if amount != self._price:
             return "Mismatching amount (expected {} got {})".format(
@@ -158,12 +153,10 @@ class HomepageClientProtocol(asyncio.Protocol):
                     packet.token,
                     packet.receipt, 
                     packet.signature)
-
-                print("wangbend")
+                
                 print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
-                    print("wangbendfang")
 
                     response = PaymentResult(
                         token=   packet.token,
@@ -177,7 +170,8 @@ class HomepageClientProtocol(asyncio.Protocol):
                         message= payment_status)
                     self.transport.write(response.__serialize__())
 
-                    self.transport.close()
+                
+                self.transport.close()
 
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
