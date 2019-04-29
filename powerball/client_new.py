@@ -20,6 +20,7 @@ class PaymentProcessing:
         # TODO: This is hard coded. It needs to be changed to be part of the ini
         bank_certPath = os.path.join(self._bankconfig.path(), "bank.cert")
         self._bank_cert = loadCertFromFile(bank_certPath)
+        self._tokens  = {}
         
     def set_src_account(self, src_account):
         """This is not async. should be called before loop starts or in executor"""
@@ -32,7 +33,7 @@ class PaymentProcessing:
             raise Exception("Not properly configured.")
         token = int.from_bytes(os.urandom(4), byteorder="big")
         req_admission = RequestAdmission(
-            account=self._src_account,
+            account= self._src_account,
             amount = amount,
             token  = token
         )
@@ -130,8 +131,6 @@ class HomepageClientProtocol(asyncio.Protocol):
             print("Client got", packet)
 
             if isinstance(packet, RequestTransfer):
-                print("Warning!!!")
-                print(packet.amount)
                 req = global_payment_processor.createAdmissionRequest(packet.amount)
                 self.transport.write(req.__serialize__())
 
