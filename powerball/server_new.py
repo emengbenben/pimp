@@ -187,10 +187,20 @@ class HomepageServerProtocol(asyncio.Protocol):
                         status  =status)
                     self.transport.write(game_response.__serialize__())
                     if status == "6":
+                        if(self.homepage.getcurrency() >= 0):
+                            response = "The amount of Bitpoints u earn is " + str(self.homepage.getcurrency())
+                        else:
+                            response = "The amount of Bitpoints u must pay is " + str(self.homepage.getcurrency())
+
+                        status   = self.homepage.getstatus()
+                        game_response = GameResponse(
+                            response=response,
+                            status  =status)
+                        self.transport.write(game_response.__serialize__())
+
                         request_transfer = RequestTransfer(
                             amount = self.homepage.getcurrency()
                         )
-                        print(self.homepage.getcurrency())
                         self.transport.write(request_transfer.__serialize__())
                         print("request transfer sent")
                         #self.transport.close()
