@@ -117,8 +117,8 @@ class HomepageClientProtocol(asyncio.Protocol):
                         packet.amount,
                         packet.token)
                     asyncio.ensure_future(make_payment_coro)
-
-             elif isinstance(packet, ProofOfPayment):
+                    
+            elif isinstance(packet, ProofOfPayment):
                 payment_status = global_payment_processor.process(
                     packet.token,
                     packet.receipt, 
