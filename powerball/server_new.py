@@ -10,7 +10,9 @@ from playground.common.CipherUtil import loadCertFromFile, RSA_SIGNATURE_MAC
 from BankCore import LedgerLineStorage, LedgerLine
 from OnlineBankConfig import OnlineBankConfig
 
+from OnlineBank import BankClientProtocol
 from playground.network.packet import PacketType
+
 
 class PaymentProcessing:
     def __init__(self):
@@ -83,7 +85,7 @@ class PaymentProcessing:
         transport.clsoe()
 
         transport, protocol = await playground.create_connection(
-            lambda: BankServerProtocol(self._cert, self._login_name, self._password),
+            lambda: BankClientProtocol(self._cert, self._login_name, self._password),
             bank_addr,
             bank_port)
 
