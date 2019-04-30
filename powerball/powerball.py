@@ -84,10 +84,6 @@ class PowerBall:
 				self.status = 0
 			else:
 				response = "Improper input."
-
-		elif self.status == 3:
-
-	
 			#arr = choice.split(",")
 			#arr = [int(i) for i in arr]
 			
