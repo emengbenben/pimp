@@ -41,7 +41,9 @@ class PowerBall:
 			elif choice == "3":
 
 				#response = "Enter your numbers seperated by a comma: "
+				print("prize")
 				prize = self.CalPrize(self.tickets)
+				print(prize)
 				if prize != 0:
 					response = "\nCongrats! You won {} BITPOINTS".format(prize)
 					self.currency += prize
