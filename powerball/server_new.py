@@ -122,8 +122,10 @@ class HomepageServerProtocol(asyncio.Protocol):
             print("Server got", packet)
 
             if isinstance(packet, RequestGame):
-                req = global_payment_processor.createAdmissionRequest(5)
-                self.transport.write(req.__serialize__())
+                self.homepage = Homepage()
+                self.homepage.start()
+                #req = global_payment_processor.createAdmissionRequest(5)
+                #self.transport.write(req.__serialize__())
 
             elif isinstance(packet, RequestAdmission):
                 """
@@ -148,8 +150,8 @@ class HomepageServerProtocol(asyncio.Protocol):
                     self._token = packet.token
 
 
-                    self.homepage = Homepage()
-                    self.homepage.start()
+                    #self.homepage = Homepage()
+                    #self.homepage.start()
 
                     response = PaymentResult(
                         token=   self._token,
