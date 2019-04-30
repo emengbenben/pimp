@@ -122,7 +122,7 @@ class HomepageServerProtocol(asyncio.Protocol):
             print("Server got", packet)
 
             if isinstance(packet, RequestGame):
-                req = global_payment_processor.createAdmissionRequest(self._price)
+                req = global_payment_processor.createAdmissionRequest(5)
                 self.transport.write(req.__serialize__())
 
             elif isinstance(packet, RequestAdmission):
