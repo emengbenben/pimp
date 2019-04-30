@@ -2,7 +2,7 @@ import random
 import asyncio
 import sys
 
-from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult,RequestGameResult
 from packets import RequestGame, GameRequest, GameResponse
 import getpass, os, playground
 from OnlineBank import BankClientProtocol
@@ -136,8 +136,9 @@ class HomepageClientProtocol(asyncio.Protocol):
                 req = global_payment_processor.createAdmissionRequest(packet.amount)
                 self.transport.write(req.__serialize__())
 
-            #if isinstance(packet, RequestTransferToServer):
-
+            elif isinstance(packet, RequestGameResult):
+                print("Starting game.")
+                asyncio.ensure_future(self.get_gncasino_input())
 
             elif isinstance(packet, RequestAdmission):
                 """
@@ -172,17 +173,16 @@ class HomepageClientProtocol(asyncio.Protocol):
                         accepted=False,
                         message= payment_status)
                     self.transport.write(response.__serialize__())
-
-                
                 self.transport.close()
 
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
                     print("Payment rejected: ", packet.accepted)
-                    self.transport.close()
                 else:
-                    print("Starting game.")
-                    asyncio.ensure_future(self.get_gncasino_input())
+                    print("Payment accepted.")
+                self.transport.close()
+                    #print("Starting game.")
+                    #asyncio.ensure_future(self.get_gncasino_input())
             elif isinstance(packet, GameResponse):
                 print(packet.response)
                 if packet.status != "6":
