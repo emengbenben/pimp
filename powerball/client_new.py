@@ -2,7 +2,7 @@ import random
 import asyncio
 import sys
 
-from packets import RequestTransfer, RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult
 from packets import RequestGame, GameRequest, GameResponse
 import getpass, os, playground
 from OnlineBank import BankClientProtocol
@@ -132,9 +132,12 @@ class HomepageClientProtocol(asyncio.Protocol):
         for packet in self._buffer.nextPackets():
             print("Client got", packet)
 
-            if isinstance(packet, RequestTransfer):
+            if isinstance(packet, RequestTransferToClient):
                 req = global_payment_processor.createAdmissionRequest(packet.amount)
                 self.transport.write(req.__serialize__())
+
+            #if isinstance(packet, RequestTransferToServer):
+
 
             elif isinstance(packet, RequestAdmission):
                 if self._token != None:
@@ -153,8 +156,6 @@ class HomepageClientProtocol(asyncio.Protocol):
                     packet.token,
                     packet.receipt, 
                     packet.signature)
-                
-                print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
 
@@ -186,7 +187,7 @@ class HomepageClientProtocol(asyncio.Protocol):
                     asyncio.ensure_future(self.get_gncasino_input())
                 else: 
                     print("Quit!")
-                    #self.transport.close()
+
     async def pay_for_admission(self, dst_account, amount, token):
         
         result = await global_payment_processor.make_payment(dst_account, amount, token)
