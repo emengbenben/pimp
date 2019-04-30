@@ -172,7 +172,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                 self.transport.close()
 
             elif isinstance(packet, GameRequest):
-                if packet.token != self._token:
+                if False:
                     self.transport.close()
                 else:
                     if self.homepage.getSign() == False:
