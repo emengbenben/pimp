@@ -51,7 +51,6 @@ class GameRequest(PacketType):
     DEFINITION_IDENTIFIER = "samples.GNgame.GameRequest"
     DEFINITION_VERSION = "1.0"
     FIELDS = [
-        ("token",   UINT32),
         ("command", STRING)
     ]
     
