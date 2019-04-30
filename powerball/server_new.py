@@ -239,7 +239,7 @@ if __name__=="__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
-    parser.add_argument("-p", "--port", default=5679)
+    parser.add_argument("-p", "--port", default=5657)
     parser.add_argument("--price", default = 0)
     
     args = parser.parse_args(sys.argv[1:])
