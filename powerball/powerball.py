@@ -49,8 +49,8 @@ class PowerBall:
 				else:
 					response = "\nSorry!, You didnt win anything"
 
-			response = response + self.options()
-			self.status = 0
+				response = response + self.options()
+				self.status = 0
 
 			elif choice == "4":
 				self.quit = True
