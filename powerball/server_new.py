@@ -54,10 +54,12 @@ class PaymentProcessing:
                 expected_token,
                 memo)
         amount = ledger_line.getTransactionAmount(self._account)
+        """
         if amount != self._price:
             return "Mismatching amount (expected {} got {})".format(
                 self._price,
                 amount)
+        """
         return "Verified"
         
         
@@ -238,7 +240,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5679)
-    parser.add_argument("--price", default = 5)
+    parser.add_argument("--price", default = 0)
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
