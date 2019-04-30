@@ -1,6 +1,6 @@
 from Homepage import Homepage 
 
-from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult,RequestGameResult
 from packets import RequestGame, GameRequest, GameResponse
 
 import asyncio, os, pickle
@@ -124,6 +124,8 @@ class HomepageServerProtocol(asyncio.Protocol):
             if isinstance(packet, RequestGame):
                 self.homepage = Homepage()
                 self.homepage.start()
+                response = RequestGameResult(accepted=True)
+                self.transport.write(response.__serialize__())
                 #req = global_payment_processor.createAdmissionRequest(5)
                 #self.transport.write(req.__serialize__())
 
@@ -149,10 +151,6 @@ class HomepageServerProtocol(asyncio.Protocol):
                 if payment_status == "Verified":
                     self._token = packet.token
 
-
-                    #self.homepage = Homepage()
-                    #self.homepage.start()
-
                     response = PaymentResult(
                         token=   self._token,
                         accepted=True,
@@ -164,7 +162,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                         accepted=False,
                         message= payment_status)
                     self.transport.write(response.__serialize__())
-                    self.transport.close()
+                self.transport.close()
 
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
