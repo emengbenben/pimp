@@ -241,13 +241,16 @@ if __name__=="__main__":
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5657)
     parser.add_argument("--price", default = 0)
+    parser.add_argument("-s", "--stack", default = "pimp")
+
+    stack = args.stack
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
     global_payment_processor.set_src_account(args.account)
     
     loop = asyncio.get_event_loop()
-    coro = playground.create_server(HomepageServerProtocol, host='20191.2.10.1', port=args.port)
+    coro = playground.create_server(HomepageServerProtocol, host='20191.2.10.1', port=args.port,family = stack)
     server = loop.run_until_complete(coro)
 
     
