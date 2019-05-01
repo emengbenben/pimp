@@ -6,8 +6,15 @@ class RequestGame(PacketType):
     DEFINITION_VERSION = "1.0"
     FIELDS = []
 
-class RequestTransfer(PacketType):
-    DEFINITION_IDENTIFIER = "samples.GNgame.RequestTransfer"
+class RequestGameResult(PacketType):
+    DEFINITION_IDENTIFIER = "samples.GNgame.RequestGameResult"
+    DEFINITION_VERSION = "1.0"
+    FIELDS = [
+        ("accepted", BOOL)
+        ]
+
+class RequestTransferToClient(PacketType):
+    DEFINITION_IDENTIFIER = "samples.GNgame.RequestTransferToClient"
     DEFINITION_VERSION = "1.0"
     FIELDS = [
         ("amount",  UINT16)
@@ -44,7 +51,6 @@ class GameRequest(PacketType):
     DEFINITION_IDENTIFIER = "samples.GNgame.GameRequest"
     DEFINITION_VERSION = "1.0"
     FIELDS = [
-        ("token",   UINT32),
         ("command", STRING)
     ]
     

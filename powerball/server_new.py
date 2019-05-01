@@ -1,6 +1,6 @@
 from Homepage import Homepage 
 
-from packets import RequestTransfer, RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult,RequestGameResult
 from packets import RequestGame, GameRequest, GameResponse
 
 import asyncio, os, pickle
@@ -30,13 +30,13 @@ class PaymentProcessing:
         self._account = account
         self._price   = price
         
-    def createAdmissionRequest(self):
-        if self._account == None or self._price == None:
+    def createAdmissionRequest(self, amount):
+        if self._account == None:
             raise Exception("Not properly configured.")
         token = int.from_bytes(os.urandom(4), byteorder="big")
         req_admission = RequestAdmission(
             account=self._account,
-            amount =self._price,
+            amount = amount,
             token  = token
         )
         self._tokens[ token ] = "WAITING"
@@ -54,10 +54,12 @@ class PaymentProcessing:
                 expected_token,
                 memo)
         amount = ledger_line.getTransactionAmount(self._account)
+        """
         if amount != self._price:
             return "Mismatching amount (expected {} got {})".format(
                 self._price,
                 amount)
+        """
         return "Verified"
         
         
@@ -122,8 +124,12 @@ class HomepageServerProtocol(asyncio.Protocol):
             print("Server got", packet)
 
             if isinstance(packet, RequestGame):
-                req = global_payment_processor.createAdmissionRequest()
-                self.transport.write(req.__serialize__())
+                self.homepage = Homepage()
+                self.homepage.start()
+                response = RequestGameResult(accepted=True)
+                self.transport.write(response.__serialize__())
+                #req = global_payment_processor.createAdmissionRequest(5)
+                #self.transport.write(req.__serialize__())
 
             elif isinstance(packet, RequestAdmission):
                 """
@@ -147,10 +153,6 @@ class HomepageServerProtocol(asyncio.Protocol):
                 if payment_status == "Verified":
                     self._token = packet.token
 
-
-                    self.homepage = Homepage()
-                    self.homepage.start()
-
                     response = PaymentResult(
                         token=   self._token,
                         accepted=True,
@@ -162,7 +164,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                         accepted=False,
                         message= payment_status)
                     self.transport.write(response.__serialize__())
-                    self.transport.close()
+                self.transport.close()
 
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
@@ -172,7 +174,7 @@ class HomepageServerProtocol(asyncio.Protocol):
                 self.transport.close()
 
             elif isinstance(packet, GameRequest):
-                if packet.token != self._token:
+                if False:
                     self.transport.close()
                 else:
                     if self.homepage.getSign() == False:
@@ -189,20 +191,28 @@ class HomepageServerProtocol(asyncio.Protocol):
                     if status == "6":
                         if(self.homepage.getcurrency() >= 0):
                             response = "The amount of Bitpoints u earn is " + str(self.homepage.getcurrency())
+                            request_transfer = RequestTransferToClient(
+                            amount = self.homepage.getcurrency()
+                            )
                         else:
                             response = "The amount of Bitpoints u must pay is " + str(0 - self.homepage.getcurrency())
+                            #request_transfer = RequestTransferToServer(
+                            #amount = 0 - self.homepage.getcurrency())
 
                         status   = self.homepage.getstatus()
                         game_response = GameResponse(
-                            response=response,
-                            status  =status)
+                            response = response,
+                            status = status)
                         self.transport.write(game_response.__serialize__())
 
-                        request_transfer = RequestTransfer(
-                            amount = self.homepage.getcurrency()
-                        )
-                        self.transport.write(request_transfer.__serialize__())
-                        print("request transfer sent")
+                        if(self.homepage.getcurrency() >= 0):
+                            self.transport.write(request_transfer.__serialize__())
+                            print("Request transfer sent")
+                        else:
+                            req = global_payment_processor.createAdmissionRequest(0 - self.homepage.getcurrency())
+                            self.transport.write(req.__serialize__())
+
+                        
                         #self.transport.close()
 
     async def pay_for_admission(self, dst_account, amount, token):
@@ -229,7 +239,7 @@ if __name__=="__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
-    parser.add_argument("-p", "--port", default=5679)
+    parser.add_argument("-p", "--port", default=5657)
     parser.add_argument("--price", default = 0)
     
     args = parser.parse_args(sys.argv[1:])

@@ -2,7 +2,7 @@ import random
 import asyncio
 import sys
 
-from packets import RequestTransfer, RequestAdmission, ProofOfPayment, PaymentResult
+from packets import RequestTransferToClient, RequestAdmission, ProofOfPayment, PaymentResult,RequestGameResult
 from packets import RequestGame, GameRequest, GameResponse
 import getpass, os, playground
 from OnlineBank import BankClientProtocol
@@ -132,29 +132,33 @@ class HomepageClientProtocol(asyncio.Protocol):
         for packet in self._buffer.nextPackets():
             print("Client got", packet)
 
-            if isinstance(packet, RequestTransfer):
+            if isinstance(packet, RequestTransferToClient):
                 req = global_payment_processor.createAdmissionRequest(packet.amount)
                 self.transport.write(req.__serialize__())
 
+            elif isinstance(packet, RequestGameResult):
+                print("Starting game.")
+                asyncio.ensure_future(self.get_gncasino_input())
+
             elif isinstance(packet, RequestAdmission):
+                """
                 if self._token != None:
                     self.transport.close()
                     raise Exception("Already paid!")
                 else:
-                    self._token = packet.token
-                    make_payment_coro = self.pay_for_admission(
-                        packet.account,
-                        packet.amount,
-                        packet.token)
-                    asyncio.ensure_future(make_payment_coro)
+                """
+                self._token = packet.token
+                make_payment_coro = self.pay_for_admission(
+                    packet.account,
+                    packet.amount,
+                    packet.token)
+                asyncio.ensure_future(make_payment_coro)
 
             elif isinstance(packet, ProofOfPayment):
                 payment_status = global_payment_processor.process(
                     packet.token,
                     packet.receipt, 
                     packet.signature)
-                
-                print(payment_status)
                 if payment_status == "Verified":
                     self._token = packet.token
 
@@ -169,24 +173,23 @@ class HomepageClientProtocol(asyncio.Protocol):
                         accepted=False,
                         message= payment_status)
                     self.transport.write(response.__serialize__())
-
-                
                 self.transport.close()
 
             elif isinstance(packet, PaymentResult):
                 if not packet.accepted:
                     print("Payment rejected: ", packet.accepted)
-                    self.transport.close()
                 else:
-                    print("Starting game.")
-                    asyncio.ensure_future(self.get_gncasino_input())
+                    print("Payment accepted.")
+                self.transport.close()
+                    #print("Starting game.")
+                    #asyncio.ensure_future(self.get_gncasino_input())
             elif isinstance(packet, GameResponse):
                 print(packet.response)
                 if packet.status != "6":
                     asyncio.ensure_future(self.get_gncasino_input())
                 else: 
                     print("Quit!")
-                    #self.transport.close()
+
     async def pay_for_admission(self, dst_account, amount, token):
         
         result = await global_payment_processor.make_payment(dst_account, amount, token)
@@ -211,7 +214,7 @@ class HomepageClientProtocol(asyncio.Protocol):
     
     async def get_gncasino_input(self):
         command = await async_get_input(">> ")
-        cmd = GameRequest(token=self._token, command=command)
+        cmd = GameRequest(command=command)
         self.transport.write(cmd.__serialize__())
         
 if __name__=="__main__":
@@ -219,7 +222,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
     parser.add_argument("--host", default="localhost")
-    parser.add_argument("-p", "--port", default=5679)
+    parser.add_argument("-p", "--port", default=5657)
     args = parser.parse_args(sys.argv[1:])
     host, port = args.host, args.port
     port = int(port) 
