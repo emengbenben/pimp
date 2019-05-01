@@ -221,16 +221,17 @@ if __name__=="__main__":
     import sys, argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
-    parser.add_argument("--host", default="localhost")
+    parser.add_argument("-h", "--host", default="20191.2.10.1")
     parser.add_argument("-p", "--port", default=5657)
+    parser.add_argument("-s", "--stack", default = "pimp")
     args = parser.parse_args(sys.argv[1:])
-    host, port = args.host, args.port
+    host,port,stack = args.host, args.port, args.stack
     port = int(port) 
     # this will ask for login name and password for bank for this account
     # but it doesn't actually log in yet.
     global_payment_processor.set_src_account(args.account)
     loop = asyncio.get_event_loop()
-    coro = playground.create_connection(HomepageClientProtocol, host=host, port=port)
+    coro = playground.create_connection(HomepageClientProtocol, host=host, port=port, family = stack)
     transport, protocol = loop.run_until_complete(coro)
     print("connected",protocol,transport)
     loop.add_reader(sys.stdin, stdin_reader)
