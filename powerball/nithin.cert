@@ -1,0 +1,88 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4096 (0x1000)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=Maryland, L=Baltimore, O=Johuns Hopkins University, OU=Information Security Institute, CN=20191.2./emailAddress=bwang54@jhu.edu
+        Validity
+            Not Before: May  1 01:07:52 2019 GMT
+            Not After : Apr 30 01:07:52 2020 GMT
+        Subject: C=US, ST=MD, L=Baltimore, O=JHU, OU=ISI, CN=20191.2.1./emailAddress=nithinsade@gmail.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:b0:d7:1b:b3:14:b2:a7:c3:05:25:4c:be:04:69:
+                    61:bc:22:2f:b6:eb:45:3c:c8:c7:92:3d:d0:c3:21:
+                    5f:6f:c1:4b:73:e7:d5:f7:4d:a4:c3:13:e4:f8:8a:
+                    45:30:97:dc:84:c9:2b:26:0d:3b:a3:02:1e:6a:c7:
+                    95:48:e6:27:db:d6:c7:dc:8c:08:94:8b:88:cd:fe:
+                    7a:ec:50:26:ce:cb:7f:fa:5c:8a:0f:7c:bd:8e:01:
+                    d2:0c:59:88:ab:c4:a8:5c:95:c6:b0:66:62:0a:cc:
+                    8d:63:bc:37:7a:58:ee:b5:58:7e:5c:8b:30:96:2e:
+                    a9:f6:24:14:44:82:bb:91:47:92:82:09:19:77:80:
+                    69:bd:69:fb:c5:3d:82:4e:fb:c8:85:dd:ed:e5:7a:
+                    01:00:f7:95:ac:22:fd:37:ba:be:0d:ed:86:d8:0b:
+                    eb:79:58:cf:80:c7:b1:ef:4a:38:7c:f6:b6:44:61:
+                    fb:a3:71:76:23:98:6a:9a:53:bc:00:2c:72:8c:96:
+                    48:f4:c6:99:c2:bb:39:af:bb:18:af:4b:24:d1:9c:
+                    a1:0d:b4:c3:d0:e8:d3:f8:35:6b:07:e6:22:89:db:
+                    89:54:45:a8:3c:fc:fd:e8:e2:49:56:e9:ff:80:db:
+                    8e:89:94:25:57:5b:ce:2c:e1:19:25:3b:6f:24:09:
+                    2f:61
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                92:1B:78:FA:7E:A7:0D:B0:ED:EC:55:85:08:C2:F7:A3:82:ED:1D:D2
+            X509v3 Authority Key Identifier: 
+                DirName:/O=EN.601.644/OU=PETF/emailAddress=sethjn@cs.jhu.edu/L=Baltimore/ST=Maryland/C=US/CN=20191.
+                serial:07:93:E7
+
+    Signature Algorithm: sha256WithRSAEncryption
+         28:aa:8c:99:5d:2a:49:e8:76:92:03:f6:66:a7:f4:de:8f:d2:
+         3b:2e:18:7f:8e:52:ba:e5:5c:18:25:36:08:98:e6:20:2a:db:
+         ac:8a:d9:4d:9e:5b:ad:59:b9:76:3b:74:03:81:82:ff:6d:fb:
+         8c:66:31:a9:0e:ab:d1:2e:d8:3f:b1:84:6b:d9:8c:b6:56:30:
+         99:19:e6:f9:a4:25:0c:e8:db:af:d1:84:1d:c8:3e:46:e5:05:
+         0b:f9:4a:f7:19:58:1d:11:38:df:1c:e8:a4:6a:5f:be:8d:e0:
+         d0:d1:97:67:bd:8c:63:5a:5a:10:3c:8c:3f:02:c3:33:a4:51:
+         05:7d:8d:38:dd:55:af:3f:4d:df:0b:dd:b0:ad:17:9c:7e:84:
+         49:4f:33:d5:81:1a:c9:d3:4f:62:15:f7:6a:5f:33:38:35:b5:
+         37:6f:09:93:3f:32:5b:f4:0f:42:46:ea:bf:06:47:07:3e:c4:
+         cd:23:ad:02:e0:f3:26:b7:97:9c:72:19:9b:dc:e9:8e:d1:d7:
+         3d:8b:13:28:2d:ab:fe:d4:b0:ce:94:a3:20:bb:fd:2a:6a:43:
+         67:0e:34:d2:29:87:91:9e:4d:ef:e6:62:4d:86:36:94:22:20:
+         e8:9c:6a:45:97:09:dc:e9:ab:9f:5e:c9:87:9f:8d:2a:72:fd:
+         91:7b:81:b4
+-----BEGIN CERTIFICATE-----
+MIIEujCCA6KgAwIBAgICEAAwDQYJKoZIhvcNAQELBQAwgbQxCzAJBgNVBAYTAlVT
+MREwDwYDVQQIDAhNYXJ5bGFuZDESMBAGA1UEBwwJQmFsdGltb3JlMSIwIAYDVQQK
+DBlKb2h1bnMgSG9wa2lucyBVbml2ZXJzaXR5MScwJQYDVQQLDB5JbmZvcm1hdGlv
+biBTZWN1cml0eSBJbnN0aXR1dGUxETAPBgNVBAMMCDIwMTkxLjIuMR4wHAYJKoZI
+hvcNAQkBFg9id2FuZzU0QGpodS5lZHUwHhcNMTkwNTAxMDEwNzUyWhcNMjAwNDMw
+MDEwNzUyWjCBhDELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAk1EMRIwEAYDVQQHDAlC
+YWx0aW1vcmUxDDAKBgNVBAoMA0pIVTEMMAoGA1UECwwDSVNJMRMwEQYDVQQDDAoy
+MDE5MS4yLjEuMSMwIQYJKoZIhvcNAQkBFhRuaXRoaW5zYWRlQGdtYWlsLmNvbTCC
+ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALDXG7MUsqfDBSVMvgRpYbwi
+L7brRTzIx5I90MMhX2/BS3Pn1fdNpMMT5PiKRTCX3ITJKyYNO6MCHmrHlUjmJ9vW
+x9yMCJSLiM3+euxQJs7Lf/pcig98vY4B0gxZiKvEqFyVxrBmYgrMjWO8N3pY7rVY
+flyLMJYuqfYkFESCu5FHkoIJGXeAab1p+8U9gk77yIXd7eV6AQD3lawi/Te6vg3t
+htgL63lYz4DHse9KOHz2tkRh+6NxdiOYappTvAAscoyWSPTGmcK7Oa+7GK9LJNGc
+oQ20w9Do0/g1awfmIonbiVRFqDz8/ejiSVbp/4DbjomUJVdbzizhGSU7byQJL2EC
+AwEAAaOCAQIwgf8wCQYDVR0TBAIwADAsBglghkgBhvhCAQ0EHxYdT3BlblNTTCBH
+ZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFJIbePp+pw2w7exVhQjC96OC
+7R3SMIGkBgNVHSMEgZwwgZmhgZGkgY4wgYsxEzARBgNVBAoTCkVOLjYwMS42NDQx
+DTALBgNVBAsTBFBFVEYxIDAeBgkqhkiG9w0BCQEWEXNldGhqbkBjcy5qaHUuZWR1
+MRIwEAYDVQQHEwlCYWx0aW1vcmUxETAPBgNVBAgTCE1hcnlsYW5kMQswCQYDVQQG
+EwJVUzEPMA0GA1UEAxMGMjAxOTEuggMHk+cwDQYJKoZIhvcNAQELBQADggEBACiq
+jJldKknodpID9man9N6P0jsuGH+OUrrlXBglNgiY5iAq26yK2U2eW61ZuXY7dAOB
+gv9t+4xmMakOq9Eu2D+xhGvZjLZWMJkZ5vmkJQzo26/RhB3IPkblBQv5SvcZWB0R
+ON8c6KRqX76N4NDRl2e9jGNaWhA8jD8CwzOkUQV9jTjdVa8/Td8L3bCtF5x+hElP
+M9WBGsnTT2IV92pfMzg1tTdvCZM/Mlv0D0JG6r8GRwc+xM0jrQLg8ya3l5xyGZvc
+6Y7R1z2LEygtq/7UsM6UoyC7/SpqQ2cONNIph5GeTe/mYk2GNpQiIOicakWXCdzp
+q59eyYefjSpy/ZF7gbQ=
+-----END CERTIFICATE-----
