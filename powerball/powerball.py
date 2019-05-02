@@ -9,6 +9,7 @@ class PowerBall:
 		self.status = 0  # 0 means just enter into the homepage 
 		self.num = 0  # num is the Number of tickets client want to buy
 		self.currency = 0
+		self.tickets = []
 
 	def getquit(self):
 		return self.quit
@@ -41,15 +42,16 @@ class PowerBall:
 			elif choice == "3":
 
 				#response = "Enter your numbers seperated by a comma: "
-				print("prize")
-				prize = self.CalPrize(self.tickets)
-				print(prize)
-				if prize != 0:
-					response = "\nCongrats! You won {} BITPOINTS".format(prize)
-					self.currency += prize
-
+				if(len(self.tickets) == 0):
+					response = "U must pick your numbers firstly"
 				else:
-					response = "\nSorry!, You didnt win anything"
+					prize = self.CalPrize(self.tickets)
+					if prize != 0:
+						response = "\nCongrats! You won {} BITPOINTS".format(prize)
+						self.currency += prize
+
+					else:
+						response = "\nSorry!, You didnt win anything"
 
 				response = response + self.options()
 				self.status = 0
