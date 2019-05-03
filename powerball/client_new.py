@@ -223,7 +223,7 @@ if __name__=="__main__":
     parser.add_argument("account")
     parser.add_argument("--host", default="20191.2.10.1")
     parser.add_argument("-p", "--port", default=5657)
-    parser.add_argument("-s", "--stack", default = "pls")
+    parser.add_argument("-s", "--stack", default = "pls_roast")
     args = parser.parse_args(sys.argv[1:])
     host,port,stack = args.host, args.port, args.stack
     port = int(port) 
