@@ -241,7 +241,7 @@ if __name__=="__main__":
     parser.add_argument("account")
     parser.add_argument("-p", "--port", default=5657)
     parser.add_argument("--price", default = 0)
-    parser.add_argument("-s", "--stack", default = "pls_roast")
+    parser.add_argument("-s", "--stack", default = "pimp")
     
     args = parser.parse_args(sys.argv[1:])
     global_payment_processor.configure(args.account, int(args.price))
