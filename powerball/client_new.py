@@ -221,7 +221,7 @@ if __name__=="__main__":
     import sys, argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("account")
-    parser.add_argument("--host", default="20191.2.10.1")
+    parser.add_argument("--host", default="20191.2.1.0")
     parser.add_argument("-p", "--port", default=5657)
     parser.add_argument("-s", "--stack", default = "pls_roast")
     args = parser.parse_args(sys.argv[1:])
